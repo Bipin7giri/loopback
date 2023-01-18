@@ -1,0 +1,6 @@
+export enum GROUP_TYPE {
+  PROMOTION = 'PROMOTION',
+  INTRO = 'INTRO',
+  SPLASH = 'SPLASH',
+  POPUP = 'POPUP',
+}
