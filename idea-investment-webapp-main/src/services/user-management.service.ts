@@ -15,7 +15,7 @@ import {HttpClientServiceBindings, PasswordHasherBindings} from '../keys';
 import {Role, RoleRelations, User, UserWithPassword} from '../models';
 import {Credentials, RoleRepository, UserRepository} from '../repositories';
 import {RESEND_VERIFICATION, RESET_PASSWORD, VERIFICATION} from '../types';
-import {EmailService} from './email.service';
+// import {EmailService} from './email.service';
 import {PasswordHasher} from './hash.password.bcryptjs';
 
 export class UserManagementService implements UserService<User, Credentials> {
@@ -26,8 +26,8 @@ export class UserManagementService implements UserService<User, Credentials> {
     public roleRepository: RoleRepository,
     @inject(PasswordHasherBindings.PASSWORD_HASHER)
     public passwordHasher: PasswordHasher,
-    @inject('services.EmailService')
-    public emailService: EmailService,
+    // @inject('services.EmailService')
+    // public emailService: EmailService,
     @inject(HttpClientServiceBindings.HTTP_CLIENT_SERVICE)
     public httpClientService: HttpClientService,
   ) {}
@@ -113,7 +113,7 @@ export class UserManagementService implements UserService<User, Credentials> {
     await userWithPassword.roles.map((item: Role) =>
       this.userRepository.roles(user.id).link(item.id),
     );
-    this.emailService.sendVerificationTokenMail(user);
+    // this.emailService.sendVerificationTokenMail(user);
     return user;
   }
 
@@ -156,9 +156,9 @@ export class UserManagementService implements UserService<User, Credentials> {
       tokenType: TOKEN_TYPE.verification,
     });
 
-    this.emailService.sendVerificationTokenMail(
-      await this.userRepository.findById(userExists.id),
-    );
+    // this.emailService.sendVerificationTokenMail(
+    //   await this.userRepository.findById(userExists.id),
+    // );
 
     return `Verification OPT is successfully send to your email: ${userExists.email}`;
   }
@@ -177,9 +177,9 @@ export class UserManagementService implements UserService<User, Credentials> {
       tokenType: TOKEN_TYPE.resetPassword,
     });
 
-    this.emailService.sendResetPasswordMail(
-      await this.userRepository.findById(userExists.id),
-    );
+    // this.emailService.sendResetPasswordMail(
+    //   await this.userRepository.findById(userExists.id),
+    // );
 
     return `Verification OPT is successfully send to your email: ${userExists.email}.`;
   }

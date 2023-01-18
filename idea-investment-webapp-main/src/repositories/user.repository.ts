@@ -10,23 +10,19 @@ import {DbDataSource} from '../datasources';
 import {
   Address,
   Media,
-  Order,
+
   Role,
   User,
   UserCredentials,
-  UserEnquiry,
-  UserInvestment,
+
   UserRelations,
   UserRoles,
 } from '../models';
 import {AddressRepository} from './address.repository';
 import {DefaultBaseEntityCrudRepository} from './default-base-entity-crud.repository.base';
 import {MediaRepository} from './media.repository';
-import {OrderRepository} from './order.repository';
 import {RoleRepository} from './role.repository';
 import {UserCredentialsRepository} from './user-credentials.repository';
-import {UserEnquiryRepository} from './user-enquiry.repository';
-import {UserInvestmentRepository} from './user-investment.repository';
 import {UserRolesRepository} from './user-roles.repository';
 
 export type Credentials = {
@@ -61,19 +57,7 @@ export class UserRepository extends DefaultBaseEntityCrudRepository<
     typeof User.prototype.id
   >;
 
-  public readonly userEnquiries: HasManyRepositoryFactory<
-    UserEnquiry,
-    typeof User.prototype.id
-  >;
 
-  public readonly userInvestments: HasManyRepositoryFactory<
-    UserInvestment,
-    typeof User.prototype.id
-  >;
-  public readonly order: HasManyRepositoryFactory<
-    Order,
-    typeof User.prototype.id
-  >;
   constructor(
     @inject('datasources.db') dataSource: DbDataSource,
     @repository.getter('UserCredentialsRepository')
@@ -86,31 +70,9 @@ export class UserRepository extends DefaultBaseEntityCrudRepository<
     protected addressRepositoryGetter: Getter<AddressRepository>,
     @repository.getter('MediaRepository')
     protected mediaRepositoryGetter: Getter<MediaRepository>,
-    @repository.getter('UserEnquiryRepository')
-    protected userEnquiryRepositoryGetter: Getter<UserEnquiryRepository>,
-    @repository.getter('OrderRepository')
-    protected orderRepositoryGetter: Getter<OrderRepository>,
-    @repository.getter('UserInvestmentRepository')
-    protected userInvestmentRepositoryGetter: Getter<UserInvestmentRepository>,
   ) {
     super(User, dataSource);
-    this.userInvestments = this.createHasManyRepositoryFactoryFor(
-      'userInvestments',
-      userInvestmentRepositoryGetter,
-    );
-    this.registerInclusionResolver(
-      'userInvestments',
-      this.userInvestments.inclusionResolver,
-    );
-    this.order = this.createHasManyRepositoryFactoryFor(
-      'order',
-      orderRepositoryGetter,
-    );
-    this.registerInclusionResolver('order', this.order.inclusionResolver);
-    this.userEnquiries = this.createHasManyRepositoryFactoryFor(
-      'userEnquiries',
-      userEnquiryRepositoryGetter,
-    );
+
     this.profilePicture = this.createBelongsToAccessorFor(
       'profilePicture',
       mediaRepositoryGetter,

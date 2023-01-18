@@ -161,7 +161,6 @@ export class UserManagementController {
       user.tokenExpiredDate = new Date();
       user.tokenType = TOKEN_TYPE.verification;
       const res = await this.userManagementService.createUser(user);
-      res.token = null;
       res.id = 0;
       return res;
     } catch (error: any) {

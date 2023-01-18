@@ -8,14 +8,13 @@ import {
 import {IAuthUser} from 'loopback4-authentication';
 import {GENDER, TOKEN_TYPE} from '../enums';
 import {Address} from './address.model';
-import {Article} from './article.model';
+
 import {BaseEntity} from './base-entity.model';
 import {Media} from './media.model';
-import {Order} from './order.model';
+
 import {Role} from './role.model';
 import {UserCredentials} from './user-credentials.model';
-import {UserEnquiry} from './user-enquiry.model';
-import {UserInvestment} from './user-investment.model';
+
 import {UserRoles} from './user-roles.model';
 
 @model({name: 'users'})
@@ -203,8 +202,7 @@ export class User extends BaseEntity implements IAuthUser {
   @hasOne(() => Address, {keyTo: 'userId'})
   address: Address;
 
-  @hasMany(() => Article, {keyTo: 'userId'})
-  articles: Article[];
+
 
   @belongsTo(
     () => Media,
@@ -213,9 +211,7 @@ export class User extends BaseEntity implements IAuthUser {
   )
   profilePictureId: number;
 
-  @hasMany(() => UserEnquiry, {keyTo: 'userId'})
-  userEnquiries: UserEnquiry[];
-  username: string;
+
 
   @property({
     type: 'boolean',
@@ -230,11 +226,7 @@ export class User extends BaseEntity implements IAuthUser {
   })
   status: boolean;
 
-  @hasMany(() => UserInvestment, {keyTo: 'userId'})
-  userInvestments: UserInvestment[];
 
-  @hasMany(() => Order, {keyTo: 'orderById'})
-  order: Order[];
 
   constructor(data?: Partial<User>) {
     super(data);
